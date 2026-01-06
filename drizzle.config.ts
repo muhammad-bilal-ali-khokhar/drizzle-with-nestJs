@@ -8,6 +8,14 @@
  * @see https://orm.drizzle.team/kit-docs/config-reference
  */
 
+import 'dotenv/config';
+import { ShardRoutingService } from './src/sharding/shard-routing.service';
+import { user } from 'src/mock';
+
+// Get database URL based on user region
+const shardService = new ShardRoutingService();
+const databaseUrl = shardService.getShardBaseUrl(user);
+
 export default {
   // Path to database schema definition file
   schema: './src/database/schema.ts',
@@ -20,7 +28,7 @@ export default {
   
   // Database connection credentials
   dbCredentials: {
-    // PostgreSQL connection URL from environment variables
-    url: process.env.DATABASE_URL!,
+    // Conditionally selected PostgreSQL connection URL based on region
+    url: databaseUrl,
   },
 };

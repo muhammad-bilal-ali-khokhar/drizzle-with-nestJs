@@ -13,10 +13,8 @@ export class TodosService {
   ) {}
 
   async create(createTodoDto: CreateTodoDto) {
-    console.log('Creating todo with data:', createTodoDto);
     try {
       const result = await this.db.insert(todo).values(createTodoDto).returning();
-      console.log('Todo created successfully:', result[0]);
       return result[0];
     } catch (error) {
       console.error('Error creating todo:', error);
